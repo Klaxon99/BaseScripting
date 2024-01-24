@@ -2,10 +2,17 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-    [SerializeField] private float _movementSpeed;
+    [SerializeField] private float _speed;
+
+    private Vector3 _diraction = Vector3.zero;
+
+    public void SetDiraction(Vector3 diraction)
+    {
+        _diraction = diraction;
+    }
 
     private void Update()
     {
-        transform.Translate(Vector3.forward * _movementSpeed * Time.deltaTime);
+        transform.Translate(_diraction * _speed * Time.deltaTime);
     }
 }
