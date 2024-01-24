@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-    [SerializeField] private float _speed;
-    [SerializeField] private Vector3 _diraction = Vector3.zero;
+    [SerializeField] private float _speed = 5f;
+
+    private Vector3 _diraction = Vector3.zero;
 
     public void SetDiraction(Vector3 diraction)
     {

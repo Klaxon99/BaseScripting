@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
             _timer = 0f;
             GameObject enemy = Instantiate(_enemyPrefab, transform.position, Quaternion.identity);
 
-            enemy.GetComponent<Mover>().SetDiraction(_enemyDiraction);
+            enemy.AddComponent<Mover>().SetDiraction(_enemyDiraction);
         }
 
         _timer += Time.deltaTime;
