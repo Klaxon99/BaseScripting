@@ -1,18 +1,34 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
 
-    private Vector3 _diraction = Vector3.zero;
+    private Transform _target;
 
-    private void Update()
+    private void Start()
     {
-        transform.Translate(_diraction * _speed * Time.deltaTime);
+        StartCoroutine(TranslatePositions());
     }
 
-    public void SetDiraction(Vector3 diraction)
+    public void SetTarget(Transform target)
     {
-        _diraction = diraction;
+        _target = target;
+    }
+
+    private IEnumerator TranslatePositions()
+    {
+        while (CalculateDistanceToTarget() != Vector3.zero)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime);
+
+            yield return null;
+        }
+    }
+
+    private Vector3 CalculateDistanceToTarget()
+    {
+        return transform.position - _target.position;
     }
 }

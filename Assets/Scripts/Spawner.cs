@@ -1,23 +1,27 @@
+using System.Collections;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
     [SerializeField] Enemy _enemyPrefab;
-    [SerializeField] Vector3 _enemyDiraction = Vector3.forward;
+    [SerializeField] GameObject _enemyTarget;
 
-    private float _spawnPause = 2f;
-    private float _timer = 0f;
+    private int _spawnDelay = 2;
 
-    private void Update()
+    private void Start()
     {
-        if (_timer >= _spawnPause)
+        StartCoroutine(SpawnEnemies());
+    }
+
+    private IEnumerator SpawnEnemies()
+    {
+        while (true)
         {
-            _timer = 0f;
             Enemy enemy = Instantiate(_enemyPrefab, transform.position, Quaternion.identity);
 
-            enemy.SetDiraction(_enemyDiraction);
-        }
+            enemy.SetTarget(_enemyTarget.transform);
 
-        _timer += Time.deltaTime;
+            yield return new WaitForSeconds(_spawnDelay);
+        }
     }
 }
