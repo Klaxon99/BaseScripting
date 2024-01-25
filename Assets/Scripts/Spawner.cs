@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] Enemy _enemyPrefab;
-    [SerializeField] GameObject _enemyTarget;
+    [SerializeField] private Enemy _enemyPrefab;
+    [SerializeField] private Target _enemyTarget;
 
     private int _spawnDelay = 2;
 
@@ -15,13 +15,15 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
+        WaitForSeconds wait = new WaitForSeconds(_spawnDelay);
+
         while (true)
         {
             Enemy enemy = Instantiate(_enemyPrefab, transform.position, Quaternion.identity);
 
             enemy.SetTarget(_enemyTarget.transform);
 
-            yield return new WaitForSeconds(_spawnDelay);
+            yield return wait;
         }
     }
 }
