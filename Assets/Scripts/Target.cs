@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    [SerializeField] private Vector3 _targetPosition;
     [SerializeField] private float _diractionSpeed = 5;
+    [SerializeField] private Vector3[] _route;
 
     private void Start()
     {
@@ -13,9 +13,25 @@ public class Target : MonoBehaviour
 
     private IEnumerator Move()
     {
-        while (transform.position != _targetPosition)
+        int currentDirecitonIndex = 0;
+
+        while (true)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _diractionSpeed * Time.deltaTime);
+            if (currentDirecitonIndex >= _route.Length)
+            {
+                currentDirecitonIndex = 0;
+            }
+
+            yield return TranslatePositions(_route[currentDirecitonIndex]);
+            currentDirecitonIndex++;
+        }
+    }
+
+    private IEnumerator TranslatePositions(Vector3 target)
+    {
+        while (transform.position != target)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, target, _diractionSpeed * Time.deltaTime);
 
             yield return null;
         }
