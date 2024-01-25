@@ -3,21 +3,19 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    [SerializeField] private Vector3 _direction = Vector3.forward;
-    [SerializeField] private float _directionSpeed;
-    [SerializeField] private float _rotationSpeed;
+    [SerializeField] private Vector3 _targetPosition;
+    [SerializeField] private float _diractionSpeed = 5;
 
-    void Start()
+    private void Start()
     {
         StartCoroutine(Move());
     }
 
     private IEnumerator Move()
     {
-        while (true)
+        while (transform.position != _targetPosition)
         {
-            transform.Translate(_direction * _directionSpeed * Time.deltaTime);
-            transform.Rotate(Vector3.up, _rotationSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _diractionSpeed * Time.deltaTime);
 
             yield return null;
         }
