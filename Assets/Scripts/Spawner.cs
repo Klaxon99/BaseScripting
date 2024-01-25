@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] GameObject _enemyPrefab;
+    [SerializeField] Enemy _enemyPrefab;
     [SerializeField] Vector3 _enemyDiraction = Vector3.forward;
 
     private float _spawnPause = 2f;
@@ -13,9 +13,9 @@ public class Spawner : MonoBehaviour
         if (_timer >= _spawnPause)
         {
             _timer = 0f;
-            GameObject enemy = Instantiate(_enemyPrefab, transform.position, Quaternion.identity);
+            Enemy enemy = Instantiate(_enemyPrefab, transform.position, Quaternion.identity);
 
-            enemy.AddComponent<Mover>().SetDiraction(_enemyDiraction);
+            enemy.SetDiraction(_enemyDiraction);
         }
 
         _timer += Time.deltaTime;
